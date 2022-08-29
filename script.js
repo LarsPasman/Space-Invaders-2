@@ -44,7 +44,7 @@ function setup() {
   textAlign(CENTER);
 
 //background muziek spelen
-  backgroundMusic.play();  
+//  backgroundMusic.play();
 }
 
 function draw(){
@@ -53,6 +53,7 @@ function draw(){
   }  
   if (gameState == 1){
    game();
+    
   }
   if (gameState == 2){
     win();
@@ -62,7 +63,10 @@ function draw(){
   }
   if (gameState == 0 && key == " " && keyIsPressed){
     gameState = 1;
+    startSound.play();
   }
+  if (mouseIsPressed == true && gameState == 2)
+    gamestate = 0;
 }
 
 function welkom(){
@@ -95,18 +99,20 @@ function welkom(){
 
   textSize(19);
   textFont(bubbleFont);
-  text('DRUK OP DE SPATIEBALK OM TE BEGINNEN',width/2, 450);
+  text('DRUK OP SPATIEBALK OM TE BEGINNEN',width/2, 450);
 }
 
 function win(){
- background(0); 
+ background(0,255,0); 
   
-  //omranding maken
-  stroke(0,255,0); //groen
-  noFill();
-  strokeWeight(3);
-  rect(width/2, height/2, width, height);
-  noStroke();  
+  fill(0);
+  textSize(40);
+  textFont(bubbleFont);
+  text('VICTORY', width/2 , 100 )
+  textSize(13);
+  textFont(pixelFont);
+  text('YOU WON!',width/2, 130);
+  text('CLICK TO PLAY AGAIN!',width/2, 160);
 }
 
 function lose(){
@@ -148,7 +154,12 @@ function game(){
   drawUI();
 
   botsingen();
-}
+
+  if (score >= 1){
+    gameState = 2;
+    winSound.play();
+  }
+}//close game
 
 //De speler UI tekenen (score en levens)
 function drawUI(){
@@ -251,5 +262,7 @@ function preload () {
 //sounds
  fireSound = loadSound('pew.m4a');
  explosionSound = loadSound('explosion.m4a');
- backgroundMusic = loadSound('backgroundMusic.mp3');
+ backgroundMusic = loadSound('8bit_song.mp3');
+ startSound = loadSound('8bit_charge.m4a');
+ winSound = loadSound('8bit_win.m4a');
 }
