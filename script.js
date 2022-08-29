@@ -1,4 +1,4 @@
-//Speler 
+ //Speler 
 var p1X = 320;
 var p1Y = 600;
 var p1Width = 50;
@@ -32,6 +32,9 @@ function setup() {
 
   rectMode(CENTER);
   imageMode(CENTER);
+
+//background muziek spelen
+  backgroundMusic.play();  
 }
 
 var width = 640;
