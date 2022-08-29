@@ -44,7 +44,7 @@ function setup() {
   textAlign(CENTER);
 
 //background muziek spelen
-//  backgroundMusic.play();
+ backgroundMusic.play();
 }
 
 function draw(){
@@ -65,8 +65,6 @@ function draw(){
     gameState = 1;
     startSound.play();
   }
-  if (mouseIsPressed == true && gameState == 2)
-    gamestate = 0;
 }
 
 function welkom(){
@@ -105,14 +103,20 @@ function welkom(){
 function win(){
  background(0,255,0); 
   
+  textAlign(CENTER);
   fill(0);
-  textSize(40);
+  textSize(60);
   textFont(bubbleFont);
-  text('VICTORY', width/2 , 100 )
-  textSize(13);
+  text('VICTORY', width/2 , 200 )
+  textSize(25);
   textFont(pixelFont);
-  text('YOU WON!',width/2, 130);
-  text('CLICK TO PLAY AGAIN!',width/2, 160);
+  text('REFRESH TO PLAY AGAIN!',width/2, 250);
+
+  stroke(0);
+  noFill();
+  strokeWeight(3);
+  rect(width/2, height/2, width, height);
+  noStroke();
 }
 
 function lose(){
