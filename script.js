@@ -1,9 +1,9 @@
 //Speler 
-var p1X = 300;
-var p1Y = 475;
+var p1X = 320;
+var p1Y = 600;
 var p1Width = 50;
 var p1Height = 30;
-var p1Speed = 5;
+var p1Speed = 7;
 
 //Aliens
 //Row 1
@@ -15,28 +15,33 @@ var a1h = 40;
 //Raketten
 var r1x = p1X;
 var r1y = p1Y; //raket begint waar speler is 
-var rwidth = 7;
-var rheight = 20;
-var rspeed = 5;
+var rwidth = 10;
+var rheight = 10;
+var rspeed = 8;
 var fire = false ;
 var r1position = 0; //bijhouden waar de raket is
 
+var lives = 3;
+var score = 0;
+
 function setup() {
-  var cnv = createCanvas(600, 500);
+  var cnv = createCanvas(640,640);
   cnv.style('display', 'block');
 
   rectMode(CENTER);
+  bg = loadImage('sterren.png');
+
 }
 
-var width = 600;
-var height = 500;
+var width = 640;
+var height = 640;
 
 function draw(){
-  keyTyped();
+  
   keyPressed();
+  keyTyped();
   
-  
-  background(0); //zwart 
+  background(bg); //sterren 
   
   //omranding en banner maken
   stroke(0,255,0); //groen
@@ -44,9 +49,7 @@ function draw(){
   strokeWeight(3);
   rect(width/2, height/2, width, height);
   noStroke();
-  fill(0,255,0) //groen
-  rect(width/2, 25, width, 50); // banner
-
+ 
   //draw player
   fill(25,25,175)
   rect(p1X, p1Y - 15, -15, 15,);
@@ -60,6 +63,20 @@ function draw(){
   //run rockets
   rockets();
   fireRocket();
+
+  drawUI();
+}
+
+//De speler UI tekenen (score en levens)
+function drawUI(){
+ fill(255,255,255);
+ stroke(30,150,30);
+ strokeWeight(5);
+ textSize(30)
+ textAlign(LEFT);
+ text("SCORE: " + score ,28 ,45);
+ textAlign(RIGHT);
+ text("LIVES: " + lives ,620 ,45);
 }
 
 function rockets(){
@@ -70,7 +87,7 @@ function rockets(){
 
 //raket tekenen
   fill(26,175,255);
-  rect(r1x, r1y, rwidth, rheight);
+  ellipse(r1x, r1y, rwidth, rheight);
 
 //raket afvuren en bijhouden
   if (fire == true && r1position == 0){
