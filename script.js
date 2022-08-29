@@ -25,6 +25,15 @@ var r1position = 0; //bijhouden waar de raket is
 var lives = 3;
 var score = 0;
 
+//gameState
+var gameState = 0;
+//gamestate 0 = welkom scherm
+//gamestate 1 = de echte game
+//gamestate 2 = win scherm
+//gamestate 3 = lose scherm
+
+var width = 640;
+var height = 640;
 
 function setup() {
   var cnv = createCanvas(640,640);
@@ -32,22 +41,93 @@ function setup() {
 
   rectMode(CENTER);
   imageMode(CENTER);
+  textAlign(CENTER);
 
 //background muziek spelen
   backgroundMusic.play();  
 }
 
-var width = 640;
-var height = 640;
-
 function draw(){
+  if (gameState == 0){
+   welkom();
+  }  
+  if (gameState == 1){
+   game();
+  }
+  if (gameState == 2){
+    win();
+  }
+  if (gameState == 3){
+    lose();
+  }
+  if (gameState == 0 && key == " " && keyIsPressed){
+    gameState = 1;
+  }
+}
+
+function welkom(){
+ background(0); 
+  
+  //omranding maken
+  stroke(0,255,0); //groen
+  noFill();
+  strokeWeight(3);
+  rect(width/2, height/2, width, height);
+  noStroke();  
+
+  //woorden voor welkom scherm
+  fill(0,255,0);
+  textSize(40);
+  textFont(bubbleFont);
+  text('RUIMTE INDRINGERS', width/2 , 100 )
+  textSize(13);
+  textFont(pixelFont);
+  text('GEMAAKT DOOR LARS PASMAN EN FRISO VAN NOORT',width/2, 130);
+
+  textSize(40);
+  textFont(bubbleFont);
+  text('HOW TO PLAY:', width/2 , 250)
+  textSize(10);
+  textFont(pixelFont);
+  text('GEBRUIK DE RECHTER EN LINKER PIJLEN OP HET TOETSENBORD OM TE BEWEGEN,',width/2, 290);
+  text('DRUK OP DE SPATIEBALK OM RAKETTEN AF TE VUREN',width/2, 320);
+  text('VERNIETIG ALLE ALIENS OM TE WINNEN',width/2, 380);
+
+  textSize(19);
+  textFont(bubbleFont);
+  text('DRUK OP DE SPATIEBALK OM TE BEGINNEN',width/2, 450);
+}
+
+function win(){
+ background(0); 
+  
+  //omranding maken
+  stroke(0,255,0); //groen
+  noFill();
+  strokeWeight(3);
+  rect(width/2, height/2, width, height);
+  noStroke();  
+}
+
+function lose(){
+  background(0); 
+  
+  //omranding maken
+  stroke(0,255,0); //groen
+  noFill();
+  strokeWeight(3);
+  rect(width/2, height/2, width, height);
+  noStroke();
+}
+
+function game(){
   
   keyPressed();
   keyTyped();
   
   background(0); 
   
-  //omranding en banner maken
+  //omranding maken
   stroke(0,255,0); //groen
   noFill();
   strokeWeight(3);
@@ -166,8 +246,8 @@ function preload () {
  playerImage = loadImage('player.png');
  alienImage = loadImage('alien.png');
 //fonts
- //titleFont;
- //bodyFont;
+ bubbleFont = loadFont('bubbleFont.ttf');
+ pixelFont = loadFont('pixelFont.ttf');
 //sounds
  fireSound = loadSound('pew.m4a');
  explosionSound = loadSound('explosion.m4a');
