@@ -21,8 +21,10 @@ var rspeed = 8;
 var fire = false ;
 var r1position = 0; //bijhouden waar de raket is
 
+//counters
 var lives = 3;
 var score = 0;
+
 
 function setup() {
   var cnv = createCanvas(640,640);
@@ -62,9 +64,10 @@ function draw(){
 
   //run rockets
   rockets();
-  fireRocket();
 
   drawUI();
+
+  botsingen();
 }
 
 //De speler UI tekenen (score en levens)
@@ -93,23 +96,25 @@ function rockets(){
   if (fire == true && r1position == 0){
     r1position = 1;
   }
-}
 
-function fireRocket(){
- if (r1position == 1){
+  if (r1position == 1){
   r1x = r1x; //stoppen met player volgen
   r1y = r1y - rspeed; //omhoog bewegen 
 
   //als raket uit window gaat of mist
-   if (r1y <=0){
-    r1position = 0; // terug naar speler
+  if (r1y <=0){
+    r1position = 2; // terug naar speler
   }  
 }
-   
- else{ // wanneer er niet word geschoten is de raket bij de speler
-  r1y = p1Y;
-  r1x = p1X;
+  else{ // wanneer er niet word geschoten is de raket bij de speler
+   r1y = p1Y;
+   r1x = p1X;
  }
+  if(r1position == 2){
+   r1y = p1Y;
+   r1x = p1X;
+   r1position = 0;
+  }  
 }
 
 //player input
@@ -142,3 +147,16 @@ function keyTyped(){
    fire = false;
  }
 }   
+
+function botsingen(){
+  //botsingen raket en alien
+  if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
+    
+  //botsing alien en rocket
+  a1x = -1000; // stuur de alien ver buiten het scherm
+  r1position = 2; // raket terug naar speler    
+    
+  // punten toevoegen
+  score = score + 1;
+  }
+}
