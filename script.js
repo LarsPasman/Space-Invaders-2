@@ -2,7 +2,7 @@
 var p1X = 320;
 var p1Y = 600;
 var p1Width = 50;
-var p1Height = 30;
+var p1Height = 70;
 var p1Speed = 7;
 
 //Aliens
@@ -10,7 +10,7 @@ var p1Speed = 7;
 var a1x = 50;
 var a1y = 150;
 var a1w = 40;
-var a1h = 40;
+var a1h = 30;
 
 //Raketten
 var r1x = p1X;
@@ -31,8 +31,7 @@ function setup() {
   cnv.style('display', 'block');
 
   rectMode(CENTER);
-  bg = loadImage('sterren.png');
-
+  imageMode(CENTER);
 }
 
 var width = 640;
@@ -43,7 +42,7 @@ function draw(){
   keyPressed();
   keyTyped();
   
-  background(bg); //sterren 
+  background(0); 
   
   //omranding en banner maken
   stroke(0,255,0); //groen
@@ -53,14 +52,12 @@ function draw(){
   noStroke();
  
   //draw player
-  fill(25,25,175)
-  rect(p1X, p1Y - 15, -15, 15,);
   fill(0,0,225)
-  rect(p1X,p1Y,p1Width,p1Height,30);
+  image(playerImage,p1X,p1Y,p1Width,p1Height,);
 
   //draw Alien
   fill(255)
-  rect(a1x,a1y,a1w,a1h);
+  image(alienImage,a1x,a1y,a1w,a1h);
 
   //run rockets
   rockets();
@@ -140,8 +137,9 @@ function keyPressed(){
 }
 
 function keyTyped(){
- if (key == " " && keyIsPressed){
+ if (key == " " && keyIsPressed && r1position == 0){
    fire = true; //rocket word afgevuurd bij spacebar
+   fireSound.play()
  }
   else {
    fire = false;
@@ -151,12 +149,24 @@ function keyTyped(){
 function botsingen(){
   //botsingen raket en alien
   if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
-    
-  //botsing alien en rocket
+
+  explosionSound.play(); 
   a1x = -1000; // stuur de alien ver buiten het scherm
   r1position = 2; // raket terug naar speler    
-    
-  // punten toevoegen
-  score = score + 1;
+  score = score + 1; // punten toevoegen
   }
+}
+
+function preload () {
+//images
+ bg = loadImage('sterren.png');
+ playerImage = loadImage('player.png');
+ alienImage = loadImage('alien.png');
+//fonts
+ //titleFont;
+ //bodyFont;
+//sounds
+ fireSound = loadSound('pew.m4a');
+ explosionSound = loadSound('explosion.m4a');
+ backgroundMusic = loadSound('backgroundMusic.mp3');
 }
