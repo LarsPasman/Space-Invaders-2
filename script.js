@@ -96,7 +96,7 @@ function draw(){
   if (gameState == 3){
     lose();
   }
-  if (gameState == 0 && key == " " && keyIsPressed){
+   if (keyCode == 13 && keyIsPressed && gameState == 0){
     gameState = 1;
     startSound.play();
   }
@@ -132,7 +132,7 @@ function welkom(){
 
   textSize(19);
   textFont(bubbleFont);
-  text('DRUK OP SPATIEBALK OM TE BEGINNEN',width/2, 450);
+  text('DRUK OP ENTER OM TE BEGINNEN',width/2, 450);
 }
 
 function win(){
@@ -219,6 +219,7 @@ function Aliens(){
 }
 
 function Meteors(){
+  // Meteor 1
  image(meteor, m1x,m1y, m1Size,m1Size);
  if(r1x >= m1x - m1Size/2 && r1x <= m1x + m1Size/2 && r1y >= m1y - m1Size/2 && r1y <= m1y + m1Size/2 ){
  
@@ -231,7 +232,7 @@ function Meteors(){
      r1position = 2;
   }//sluit else
  } 
-
+// Meteor 2 
  image(meteor, m2x,m2y, m2Size, m2Size);
  if(r1x >= m2x - m2Size/2 && r1x <= m2x + m2Size/2 && r1y >= m2y - m2Size/2 && r1y <= m2y + m2Size/2 ){
  
@@ -244,7 +245,7 @@ function Meteors(){
      r1position = 2;
   }
  } 
-
+// Meteor 3
  image(meteor, m3x,m3y, m3Size,m3Size);
  if(r1x >= m3x - m3Size/2 && r1x <= m3x + m3Size/2 && r1y >= m3y - m3Size/2 && r1y <= m3y + m3Size/2 ){
  
