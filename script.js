@@ -6,9 +6,15 @@ var p1Height = 70;
 var p1Speed = 7;
 
 //Aliens
-
 var a1w = 40;
 var a1h = 30;
+
+var row = 1;
+var currentRow = row;
+var rowDistance = 15; // hoe ver omlaag per tic
+var aDistance = 0; // hoeveel omlaag
+var aSpeed = 1; 
+var aDirection = 1;
 
 //Row 1
 var a1x = 50;
@@ -42,8 +48,9 @@ var rspeed = 16;
 var fire = false ;
 var r1position = 0; //bijhouden waar de raket is
 
+
 //Meteors
-var m1x = 160; // m1 = meteor 1 
+var m1x = 100; // m1 = meteor 1 
 var m1y = 500;
 var m1Size = 60;
 
@@ -51,7 +58,7 @@ var m2x = 320;// m2 = meteor 2
 var m2y = 480;
 var m2Size = 60;
 
-var m3x = 480;// m3 = meteor 3
+var m3x = 540;// m3 = meteor 3
 var m3y = 490;
 var m3Size = 70;
 
@@ -86,19 +93,18 @@ function draw(){
   if (gameState == 0){
    welkom();
   }  
+  
   if (gameState == 1){
-   game();
-    
+   game();  
   }
+  
   if (gameState == 2){
     win();
   }
+  
+  //lose
   if (gameState == 3){
     lose();
-  }
-   if (keyCode == 13 && keyIsPressed && gameState == 0){
-    gameState = 1;
-    startSound.play();
   }
 }
 
@@ -133,7 +139,15 @@ function welkom(){
   textSize(19);
   textFont(bubbleFont);
   text('DRUK OP ENTER OM TE BEGINNEN',width/2, 450);
-}
+
+  image(alienImage,190,540,100,75)
+  image(playerImage,450,540,75,100)
+
+    if (keyCode == 13){
+    gameState = 1;
+    startSound.play();
+  }
+}// close welkom
 
 function win(){
  background(0,255,0); 
@@ -143,27 +157,44 @@ function win(){
   textSize(60);
   textFont(bubbleFont);
   text('VICTORY', width/2 , 200 )
-  textSize(25);
+  textSize(15);
   textFont(pixelFont);
-  text('REFRESH TO PLAY AGAIN!',width/2, 250);
+  text('DRUK OP G OM OPNIEUW TE SPELEN!',width/2, 250);
 
   stroke(0);
   noFill();
   strokeWeight(3);
   rect(width/2, height/2, width, height);
   noStroke();
-}
+
+  if (keyCode == 71){
+     gameState = 0; 
+  }
+  
+}//close win
 
 function lose(){
-  background(0); 
+ background(255,0,0); 
   
-  //omranding maken
-  stroke(0,255,0); //groen
+  textAlign(CENTER);
+  fill(0);
+  textSize(60);
+  textFont(bubbleFont);
+  text('GAME OVER', width/2 , 200 )
+  textSize(15);
+  textFont(pixelFont);
+  text('DRUK OP G OM OPNIEUW TE PROBEREN!',width/2, 250);
+
+  stroke(0);
   noFill();
   strokeWeight(3);
   rect(width/2, height/2, width, height);
   noStroke();
-}
+  
+  if (keyCode == 71){
+    gameState = 0; 
+  }
+}//close lose
 
 function game(){
   
@@ -187,9 +218,9 @@ function game(){
 
   //draw Alien
   Aliens();
+  
   //run rockets
  
-
   drawUI();
 
   botsingen();
@@ -204,7 +235,8 @@ function game(){
 }//close game
 
 function Aliens(){
-  fill(255)
+  //draw aliens
+  //row 1
   image(alienImage,a1x,a1y,a1w,a1h);
   image(alienImage,a2x,a2y,a1w,a1h);
   image(alienImage,a3x,a3y,a1w,a1h);
@@ -216,7 +248,54 @@ function Aliens(){
   image(alienImage,a9x,a9y,a1w,a1h);
   image(alienImage,a10x,a10y,a1w,a1h);
 
+//beweging van aliens
+  a1x = a1x + (aSpeed*aDirection);
+  a1y = a1y + aDistance;
+  a2x = a2x + (aSpeed*aDirection);
+  a2y = a2y + aDistance;
+  a3x = a3x + (aSpeed*aDirection);
+  a3y = a3y + aDistance;
+  a4x = a4x + (aSpeed*aDirection);
+  a4y = a4y + aDistance;
+  a5x = a5x + (aSpeed*aDirection);
+  a5y = a5y + aDistance;
+  a6x = a6x + (aSpeed*aDirection);
+  a6y = a6y + aDistance;
+  a7x = a7x + (aSpeed*aDirection);
+  a7y = a7y + aDistance;
+  a8x = a8x + (aSpeed*aDirection);
+  a8y = a8y + aDistance;
+  a9x = a9x + (aSpeed*aDirection);
+  a9y = a9y + aDistance;
+  a10x = a10x + (aSpeed*aDirection);
+  a10y = a10y + aDistance;
+
+  
+//rechter kant naar beneden bewegen
+if(a10x >= width-20){
+  aDirection = aDirection*-1;
+  row = row + 1;
 }
+//linkerkant
+if(a1x <= 20){
+  aDirection = aDirection*-1;
+  row = row + 1
+ }
+
+//vertical
+  if(row > currentRow){
+    aDistance = rowDistance; // een rij omlaag
+    currentRow = row; //reset
+  }
+  else{
+    aDistance = 0;
+  }  
+
+//game over when at bottom
+  if(row >= 28){
+    gameState = 3;
+  }
+}//close aliens
 
 function Meteors(){
   // Meteor 1
