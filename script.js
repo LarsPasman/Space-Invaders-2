@@ -278,8 +278,10 @@ function keyTyped(){
 function botsingen(){
   //botsingen raket en alien
   if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
-
+    
+  image(gif_loadImg,a1x,a1y,a1w,a1h);
   explosionSound.play(); 
+ 
   a1y = -10000; // stuur de alien ver buiten het scherm
   r1position = 2; // raket terug naar speler    
   score = score + 1; // punten toevoegen
@@ -291,6 +293,8 @@ function preload () {
  bg = loadImage('sterren.png');
  playerImage = loadImage('player.png');
  alienImage = loadImage('alien.png');
+// explosionGif = loadImage("explosion.gif");
+ gif_loadImg = loadImage("explosion.gif");
 //fonts
  bubbleFont = loadFont('bubbleFont.ttf');
  pixelFont = loadFont('pixelFont.ttf');
