@@ -29,6 +29,8 @@ var a8x = 470;
 var a8y = 150;
 var a9x = 530;
 var a9y = 150;
+var a10x = 590;
+var a10y = 150;
 
 
 //Raketten
@@ -38,7 +40,7 @@ var rwidth = 10;
 var rheight = 10;
 var rspeed = 8;
 var fire = false ;
-var r1position = 0; //bijhouden waar de raket is
+var r1position = 0; //bijhouden waar de raket is 
 
 //counters
 var lives = 3;
@@ -176,7 +178,7 @@ function game(){
 
   botsingen();
 
-  if (score >= 2){
+  if (score >= 10){
     gameState = 2;
     winSound.play();
   }
@@ -193,6 +195,7 @@ function Aliens(){
   image(alienImage,a7x,a7y,a1w,a1h); 
   image(alienImage,a8x,a8y,a1w,a1h);
   image(alienImage,a9x,a9y,a1w,a1h);
+  image(alienImage,a10x,a10y,a1w,a1h);
 
 }
 
@@ -279,12 +282,93 @@ function botsingen(){
   //botsingen raket en alien
   if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
     
-  image(gif_loadImg,a1x,a1y,a1w,a1h);
+ // gif_loadImg.position(50, 350);
   explosionSound.play(); 
  
   a1y = -10000; // stuur de alien ver buiten het scherm
   r1position = 2; // raket terug naar speler    
   score = score + 1; // punten toevoegen
+  }
+
+  if(r1x >= a2x - a1w/2 && r1x <= a2x + a1w/2 && r1y >= a2y - a1h/2 && r1y <= a2y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a2y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a3x - a1w/2 && r1x <= a3x + a1w/2 && r1y >= a3y - a1h/2 && r1y <= a3y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a3y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a4x - a1w/2 && r1x <= a4x + a1w/2 && r1y >= a4y - a1h/2 && r1y <= a4y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a4y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a5x - a1w/2 && r1x <= a5x + a1w/2 && r1y >= a5y - a1h/2 && r1y <= a5y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a5y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a6x - a1w/2 && r1x <= a6x + a1w/2 && r1y >= a6y - a1h/2 && r1y <= a6y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a6y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a7x - a1w/2 && r1x <= a7x + a1w/2 && r1y >= a7y - a1h/2 && r1y <= a7y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a7y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a8x - a1w/2 && r1x <= a8x + a1w/2 && r1y >= a8y - a1h/2 && r1y <= a8y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a8y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  }
+
+  if(r1x >= a9x - a1w/2 && r1x <= a9x + a1w/2 && r1y >= a9y - a1h/2 && r1y <= a9y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a9y = -10000;
+  r1position = 2;   
+  score = score + 1;
+  } 
+
+  if(r1x >= a10x - a1w/2 && r1x <= a10x + a1w/2 && r1y >= a10y - a1h/2 && r1y <= a10y + a1h/2 ){
+    
+  explosionSound.play(); 
+ 
+  a10y = -10000;
+  r1position = 2;   
+  score = score + 1;
   }
 }
 
@@ -294,7 +378,7 @@ function preload () {
  playerImage = loadImage('player.png');
  alienImage = loadImage('alien.png');
 // explosionGif = loadImage("explosion.gif");
- gif_loadImg = loadImage("explosion.gif");
+ //gif_loadImg = createImage("explosion.gif");
 //fonts
  bubbleFont = loadFont('bubbleFont.ttf');
  pixelFont = loadFont('pixelFont.ttf');
