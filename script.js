@@ -6,11 +6,30 @@ var p1Height = 70;
 var p1Speed = 7;
 
 //Aliens
+
+var a1w = 40;
+var a1h = 30;
+
 //Row 1
 var a1x = 50;
 var a1y = 150;
-var a1w = 40;
-var a1h = 30;
+var a2x = 110;
+var a2y = 150;
+var a3x = 170;
+var a3y = 150;
+var a4x = 230;
+var a4y = 150;
+var a5x = 290;
+var a5y = 150;
+var a6x = 350;
+var a6y = 150;
+var a7x = 410;
+var a7y = 150;
+var a8x = 470;
+var a8y = 150;
+var a9x = 530;
+var a9y = 150;
+
 
 //Raketten
 var r1x = p1X;
@@ -149,9 +168,7 @@ function game(){
   image(playerImage,p1X,p1Y,p1Width,p1Height,);
 
   //draw Alien
-  fill(255)
-  image(alienImage,a1x,a1y,a1w,a1h);
-
+  Aliens();
   //run rockets
   rockets();
 
@@ -159,11 +176,25 @@ function game(){
 
   botsingen();
 
-  if (score >= 1){
+  if (score >= 2){
     gameState = 2;
     winSound.play();
   }
 }//close game
+
+function Aliens(){
+  fill(255)
+  image(alienImage,a1x,a1y,a1w,a1h);
+  image(alienImage,a2x,a2y,a1w,a1h);
+  image(alienImage,a3x,a3y,a1w,a1h);
+  image(alienImage,a4x,a4y,a1w,a1h);
+  image(alienImage,a5x,a5y,a1w,a1h);
+  image(alienImage,a6x,a6y,a1w,a1h); 
+  image(alienImage,a7x,a7y,a1w,a1h); 
+  image(alienImage,a8x,a8y,a1w,a1h);
+  image(alienImage,a9x,a9y,a1w,a1h);
+
+}
 
 //De speler UI tekenen (score en levens)
 function drawUI(){
@@ -235,7 +266,7 @@ function keyPressed(){
 }
 
 function keyTyped(){
- if (key == " " && keyIsPressed && r1position == 0){
+ if (key == " " && keyIsPressed && r1position == 0 && gameState == 1){
    fire = true; //rocket word afgevuurd bij spacebar
    fireSound.play()
  }
@@ -249,7 +280,7 @@ function botsingen(){
   if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
 
   explosionSound.play(); 
-  a1x = -1000; // stuur de alien ver buiten het scherm
+  a1y = -10000; // stuur de alien ver buiten het scherm
   r1position = 2; // raket terug naar speler    
   score = score + 1; // punten toevoegen
   }
