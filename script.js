@@ -159,7 +159,7 @@ function win(){
   text('VICTORY', width/2 , 200 )
   textSize(15);
   textFont(pixelFont);
-  text('DRUK OP G OM OPNIEUW TE SPELEN!',width/2, 250);
+  text('REFRESH DE SITE OM OPNIEUW TE SPELEN!',width/2, 250);
 
   stroke(0);
   noFill();
@@ -167,10 +167,6 @@ function win(){
   rect(width/2, height/2, width, height);
   noStroke();
 
-  if (keyCode == 71){
-     gameState = 0; 
-  }
-  
 }//close win
 
 function lose(){
@@ -183,7 +179,7 @@ function lose(){
   text('GAME OVER', width/2 , 200 )
   textSize(15);
   textFont(pixelFont);
-  text('DRUK OP G OM OPNIEUW TE PROBEREN!',width/2, 250);
+  text('REFRESH DE SITE OM OPNIEUW TE PROBEREN!',width/2, 250);
 
   stroke(0);
   noFill();
@@ -193,6 +189,7 @@ function lose(){
   
   if (keyCode == 71){
     gameState = 0; 
+    game();
   }
 }//close lose
 
@@ -511,7 +508,6 @@ function botsingen(){
   r1position = 2;   
   score = score + 1;
   }
- 
 }
 
 function preload () {
