@@ -16,6 +16,9 @@ var aDistance = 0; // hoeveel omlaag
 var aSpeed = 1; 
 var aDirection = 1;
 
+
+let aliens = []; // class aliens
+
 //Row 1
 var a1x = 50;
 var a1y = 150;
@@ -77,6 +80,8 @@ var gameState = 0;
 var width = 640;
 var height = 640;
 
+
+
 function setup() {
   var cnv = createCanvas(640,640);
   cnv.style('display', 'block');
@@ -87,9 +92,23 @@ function setup() {
 
 //background muziek spelen
  backgroundMusic.play();
-}
+
+  //onderste rij aliens
+  startX = 91;
+  startY = 190;
+  for (var i = 0; i < 6; i++)
+    aliens[i] = new Alien(i * startX + 91 , startY, alien1a, alien1b, 5)
+//bovenste rij
+  startY = 150;
+  let offset = 0;
+  for (var j=6; j<12; j++){
+    aliens[j] = new Alien(offset * startX + 91 , startY, alien2a, alien2b, 10);
+    offset++;
+  }
+}//close setup
 
 function draw(){
+
   if (gameState == 0){
    welkom();
   }  
@@ -199,7 +218,10 @@ function game(){
   keyTyped();
   
   background(0); 
-  
+
+  for(var i = 0; i <aliens.length; i++){
+    aliens[i].show();
+  }
   //omranding maken
   stroke(0,255,0); //groen
   noFill();
@@ -287,7 +309,9 @@ if(a1x <= 20){
   else{
     aDistance = 0;
   }  
-
+ if (row >= 20){
+   aDirection = aDirection * 2;
+ }
 //game over when at bottom
   if(row >= 28){
     gameState = 3;
@@ -512,19 +536,25 @@ function botsingen(){
 
 function preload () {
 //images
- bg = loadImage('sterren.png');
- playerImage = loadImage('player.png');
- alienImage = loadImage('alien.png');
- meteor = loadImage('rock.png');
+ bg = loadImage('img/sterren.png');
+ playerImage = loadImage('img/player.png');
+ alienImage = loadImage('img/alien.png');
+ meteor = loadImage('img/rock.png');
+
+//aliens
+ alien1a = loadImage('img/alien1a.png')
+ alien1b = loadImage('img/alien1b.png')
+ alien2a = loadImage('img/alien2a.png')
+ alien2b = loadImage('img/alien2b.png')
 // explosionGif = loadImage("explosion.gif");
 // gif = createImg("explosion.gif");
 //fonts
- bubbleFont = loadFont('bubbleFont.ttf');
- pixelFont = loadFont('pixelFont.ttf');
+ bubbleFont = loadFont('fonts/bubbleFont.ttf');
+ pixelFont = loadFont('fonts/pixelFont.ttf');
 //sounds
- fireSound = loadSound('pew.m4a');
- explosionSound = loadSound('explosion.m4a');
- backgroundMusic = loadSound('8bit_song.mp3');
- startSound = loadSound('8bit_charge.m4a');
- winSound = loadSound('8bit_win.m4a');
+ fireSound = loadSound('music/pew.m4a');
+ explosionSound = loadSound('music/explosion.m4a');
+ backgroundMusic = loadSound('music/8bit_song.mp3');
+ startSound = loadSound('music/8bit_charge.m4a');
+ winSound = loadSound('music/8bit_win.m4a');
 }
