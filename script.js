@@ -193,6 +193,7 @@ function game(){
   background(0); 
   
 // aliens
+  
   for(var i = 0; i <aliens.length; i++){
     aliens[i].show();
     aliens[i].move();
@@ -204,9 +205,7 @@ function game(){
   strokeWeight(3);
   rect(width/2, height/2, width, height);
   noStroke();
-  
-  rockets();
-  
+
   //draw player
   ship.show();
   ship.move();
@@ -217,9 +216,31 @@ function game(){
   //run meteors
   Meteors();
 
-  if (score >= 10){
+  //beweeg en laat rockets zien
+  for (var r1 = 0; r1 < rockets.length; r1++){
+    rockets[r1].show();
+    rockets[r1].move();
+    //botsingen
+    for (var j = 0; j < aliens.length; j++){
+      if(rockets[r1].hits(aliens[j])){
+        rockets[r1].remove();
+        score = score + aliens[j].pts;
+        aliens.splice(j,1); //verwijder alien van lijst
+      }
+    }// einde alien loop
+  }// einde rocket loop #1
+
+  //loop door rockets en verwijder
+  for (var z = rockets.length -1; z>= 0; z--){
+    if(rockets[z].toDelete === true){
+      rockets.splice(z,1) // verwijder rocket van lijst
+    }
+  }// einde rocket loop #2
+  updateHUD();
+  //check of game over
+  if (aliens.length <= 0){
     gameState = 2;
-    winSound.play();
+    winSound.play();   
   }
 }//close game
 
@@ -287,43 +308,12 @@ function drawUI(){
  }
 }// close drawUI
 
-function rockets(){
-// rocket position om max raketten in te stellen
-  //position = 0 betekent raket is gereed om te schieten
-  //position = 1 betekent raket is in de lucht ( )
-  //position = 2 betekent raket heeft iets geraakt en komt terug
-
-//raket tekenen
-  fill(26,175,255);
-  ellipse(r1x, r1y, rwidth, rheight);
-
-//raket afvuren en bijhouden
-  if (fire == true && r1position == 0){
-    r1position = 1;
-  }
-
-  if (r1position == 1){
-  r1x = r1x; //stoppen met player volgen
-  r1y = r1y - rspeed; //omhoog bewegen 
-
-  //als raket uit window gaat of mist
-  if (r1y <=0){
-    r1position = 2; // terug naar speler
-  }  
-}
-  else{ // wanneer er niet word geschoten is de raket bij de speler
-   r1y = p1Y;
-   r1x = p1X;
- }
-  if(r1position == 2){
-   r1y = p1Y;
-   r1x = p1X;
-   r1position = 0;
-  }  
-}
-
 //player input
 function keyPressed(){
+ if(key === ' ' && keyIsPressed && gameState == 1){
+   var rocket = new Rocket (ship.x, ship.y);
+   rockets.push(rocket);
+ }
  if (keyCode === RIGHT_ARROW && keyIsPressed){
   ship.setDir(1);
  }  

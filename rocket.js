@@ -17,4 +17,19 @@ class Rocket{
   move(){
    this.y = this.y - 16;
   }
+
+  hits(alien){
+    //dist() functie meet afstand tussen 2 punten
+    var d = dist(this.x, this.y, alien.x, alien.y);
+    if (d < this.r + alien.radius){  // als ze elkaar raken
+     return true;
+    } 
+    else{
+      return false;
+    }      
+  }
+
+  remove(){
+    this.toDelete = true;
+  }
 }
