@@ -93,3 +93,49 @@ function botsingen(){
   score = score + 1;
   }
 }
+
+
+
+
+
+function Meteors(){
+  // Meteor 1
+ image(meteor, m1x,m1y, m1Size,m1Size);
+ if(rocket[r1].x >= m1x - m1Size/2 && rocket[r1].x <= m1x + m1Size/2 && rocket[r1].y >= m1y - m1Size/2 && rocket[r1].y <= m1y + m1Size/2 ){
+ 
+   if (m1Size >= 30){
+    m1Size = m1Size-10;   
+    r1position = 2;
+  }
+   else{
+     m1x = -1000;
+     r1position = 2;
+  }//sluit else
+ } 
+// Meteor 2 
+ image(meteor, m2x,m2y, m2Size, m2Size);
+ if(r1x >= m2x - m2Size/2 && r1x <= m2x + m2Size/2 && r1y >= m2y - m2Size/2 && r1y <= m2y + m2Size/2 ){
+ 
+   if (m2Size >= 30){
+    m2Size = m2Size-10;   
+    r1position = 2;
+  }
+   else{
+     m2x = -1000;
+     r1position = 2;
+  }
+ } 
+// Meteor 3
+ image(meteor, m3x,m3y, m3Size,m3Size);
+ if(r1x >= m3x - m3Size/2 && r1x <= m3x + m3Size/2 && r1y >= m3y - m3Size/2 && r1y <= m3y + m3Size/2 ){
+ 
+   if (m3Size >= 30){
+    m3Size = m3Size-10;   
+    r1position = 2;
+  }
+   else{
+     m3x = -1000;
+     r1position = 2;
+  }
+ }  
+}//sluit meteors

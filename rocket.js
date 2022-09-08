@@ -28,6 +28,16 @@ class Rocket{
       return false;
     }      
   }
+ hits(meteor){
+   //dist() functie meet afstand tussen 2 punten
+   var d = dist(this.x, this.y, meteor.x, meteor.y);
+   if (d < this.r + meteor.radius){  // als ze elkaar raken
+   return true;
+  } 
+  else{
+    return false;
+  }      
+}
 
   remove(){
     this.toDelete = true;

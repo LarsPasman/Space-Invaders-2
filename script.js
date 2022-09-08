@@ -1,38 +1,10 @@
 
-//Speler 
-var p1X = 320;
-var p1Y = 600;
-var p1Width = 50;
-var p1Height = 70;
-var p1Speed = 7;
-
 let aliens = []; // lijstje aliens
 let ship;
 let rockets = []; // lijstje raketten
+let meteors = [];//lijstje meteoren
 
-//Raketten
-var r1x = p1X;
-var r1y = p1Y; //raket begint waar speler is 
-var rwidth = 10;
-var rheight = 10;
-var rspeed = 16;
-var fire = false ;
-var r1position = 0; //bijhouden waar de raket is
-
-
-//Meteors
-var m1x = 100; // m1 = meteor 1 
-var m1y = 500;
-var m1Size = 60;
-
-var m2x = 320;// m2 = meteor 2
-var m2y = 480;
-var m2Size = 60;
-
-var m3x = 540;// m3 = meteor 3
-var m3y = 490;
-var m3Size = 70;
-
+var rposition = 0; //bijhouden waar de raket is
 
 //counters
 var time = 0;
@@ -45,11 +17,8 @@ var gameState = 0;
 //gamestate 1 = de echte game
 //gamestate 2 = win scherm
 //gamestate 3 = lose scherm
-
 var width = 640;
 var height = 640;
-
-
 
 function setup() {
   var cnv = createCanvas(640,640);
@@ -75,9 +44,13 @@ function setup() {
   for (var j=6; j<12; j++){
     aliens[j] = new Alien(offset * startX + 91 , startY, alien2a, alien2b, 10);
     offset++;
-
-  
   }
+  //meteorieten
+  startX = 100;
+  startY = 500;
+  for (var i = 0; i < 3; i++){
+    meteors[i] = new Meteor(i * startX + 220, startY, meteor);
+  } 
 }//close setup
 
 function draw(){
@@ -193,12 +166,15 @@ function game(){
   background(0); 
   
 // aliens
-  
   for(var i = 0; i <aliens.length; i++){
     aliens[i].show();
     aliens[i].move();
   }
-  
+
+//meteors
+    for(var i = 0; i <meteors.length; i++){
+    meteors[i].show();
+  }
   //omranding maken
   stroke(0,255,0); //groen
   noFill();
@@ -213,8 +189,6 @@ function game(){
  
   drawUI();
 
-  //run meteors
-  Meteors();
 
   //beweeg en laat rockets zien
   for (var r1 = 0; r1 < rockets.length; r1++){
@@ -225,67 +199,37 @@ function game(){
       if(rockets[r1].hits(aliens[j])){
         rockets[r1].remove();
         score = score + aliens[j].pts;
+        explosionSound.play();
         aliens.splice(j,1); //verwijder alien van lijst
+        rposition = 0;
       }
-    }// einde alien loop
+    }   // einde alien loop
+    for (var i = 0; i < meteors.length; i++){
+      if(rockets[r1].hits(meteors[i])){
+        rockets[r1].remove();
+        meteors.splice(i,1);
+      }
+    }//einde meteor loop
   }// einde rocket loop #1
 
   //loop door rockets en verwijder
   for (var z = rockets.length -1; z>= 0; z--){
     if(rockets[z].toDelete === true){
-      rockets.splice(z,1) // verwijder rocket van lijst
+      rockets.splice(z,1); // verwijder rocket van lijst
+      rposition = 2;
     }
   }// einde rocket loop #2
-  updateHUD();
   //check of game over
   if (aliens.length <= 0){
     gameState = 2;
     winSound.play();   
   }
+
+  if (rposition == 2)
+    rposition = 0;
+
 }//close game
 
-
-function Meteors(){
-  // Meteor 1
- image(meteor, m1x,m1y, m1Size,m1Size);
- if(r1x >= m1x - m1Size/2 && r1x <= m1x + m1Size/2 && r1y >= m1y - m1Size/2 && r1y <= m1y + m1Size/2 ){
- 
-   if (m1Size >= 30){
-    m1Size = m1Size-10;   
-    r1position = 2;
-  }
-   else{
-     m1x = -1000;
-     r1position = 2;
-  }//sluit else
- } 
-// Meteor 2 
- image(meteor, m2x,m2y, m2Size, m2Size);
- if(r1x >= m2x - m2Size/2 && r1x <= m2x + m2Size/2 && r1y >= m2y - m2Size/2 && r1y <= m2y + m2Size/2 ){
- 
-   if (m2Size >= 30){
-    m2Size = m2Size-10;   
-    r1position = 2;
-  }
-   else{
-     m2x = -1000;
-     r1position = 2;
-  }
- } 
-// Meteor 3
- image(meteor, m3x,m3y, m3Size,m3Size);
- if(r1x >= m3x - m3Size/2 && r1x <= m3x + m3Size/2 && r1y >= m3y - m3Size/2 && r1y <= m3y + m3Size/2 ){
- 
-   if (m3Size >= 30){
-    m3Size = m3Size-10;   
-    r1position = 2;
-  }
-   else{
-     m3x = -1000;
-     r1position = 2;
-  }
- }  
-}//sluit meteors
 
 //De speler UI tekenen (score en levens)
 function drawUI(){
@@ -310,9 +254,10 @@ function drawUI(){
 
 //player input
 function keyPressed(){
- if(key === ' ' && keyIsPressed && gameState == 1){
+ if(key === ' ' && keyIsPressed && gameState == 1 && rposition == 0){
    var rocket = new Rocket (ship.x, ship.y);
    rockets.push(rocket);
+   rposition = 1;
  }
  if (keyCode === RIGHT_ARROW && keyIsPressed){
   ship.setDir(1);
