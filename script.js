@@ -1,23 +1,14 @@
- //Speler 
+
+//Speler 
 var p1X = 320;
 var p1Y = 600;
 var p1Width = 50;
 var p1Height = 70;
 var p1Speed = 7;
 
-//Aliens
-var a1w = 40;
-var a1h = 30;
-
-var row = 1;
-var currentRow = row;
-var rowDistance = 10; // hoe ver omlaag per tic
-var aDistance = 0; // hoeveel omlaag
-var aSpeed = 1; 
-var aDirection = 1;
-
-
-let aliens = []; // class aliens
+let aliens = []; // lijstje aliens
+let ship;
+let rockets = []; // lijstje raketten
 
 //Raketten
 var r1x = p1X;
@@ -70,7 +61,9 @@ function setup() {
 
 //background muziek spelen
  backgroundMusic.play();
-
+ 
+  ship = new Ship();
+  
   //onderste rij aliens
   startX = 91;
   startY = 190;
@@ -82,6 +75,8 @@ function setup() {
   for (var j=6; j<12; j++){
     aliens[j] = new Alien(offset * startX + 91 , startY, alien2a, alien2b, 10);
     offset++;
+
+  
   }
 }//close setup
 
@@ -191,9 +186,9 @@ function lose(){
 }//close lose
 
 function game(){
-  
+
   keyPressed();
-  keyTyped();
+
   
   background(0); 
   
@@ -213,9 +208,8 @@ function game(){
   rockets();
   
   //draw player
-  fill(0,0,225)
-  image(playerImage,p1X,p1Y,p1Width,p1Height,);
-
+  ship.show();
+  ship.move();
   //run rockets
  
   drawUI();
@@ -330,35 +324,16 @@ function rockets(){
 
 //player input
 function keyPressed(){
- if (keyCode == LEFT_ARROW && keyIsPressed){
-  p1X -= p1Speed;
-//  r1x -= p1Speed;
-}
- else  if (keyCode == RIGHT_ARROW && keyIsPressed){
-  p1X += p1Speed;  
-//  r1x += p1Speed;
-}
-
-  
-//Player kan niet door de Linker muur heen
-  if (p1X - p1Width/2 < 0 ){
-    p1X = p1Width/2;
+ if (keyCode === RIGHT_ARROW && keyIsPressed){
+  ship.setDir(1);
+ }  
+  else if (keyCode === LEFT_ARROW && keyIsPressed){
+  ship.setDir(-1);
   }
-//Player kan niet door de rechter muur heen
-  else if (p1X + p1Width/2 > width){
-    p1X = width - p1Width/2
+  else{
+    ship.setDir(0)
   }
 }
-
-function keyTyped(){
- if (key == " " && keyIsPressed && r1position == 0 && gameState == 1){
-   fire = true; //rocket word afgevuurd bij spacebar
-   fireSound.play()
- }
-  else {
-   fire = false;
- }
-}   
 
 function preload () {
 //images
