@@ -11,36 +11,13 @@ var a1h = 30;
 
 var row = 1;
 var currentRow = row;
-var rowDistance = 15; // hoe ver omlaag per tic
+var rowDistance = 10; // hoe ver omlaag per tic
 var aDistance = 0; // hoeveel omlaag
 var aSpeed = 1; 
 var aDirection = 1;
 
 
 let aliens = []; // class aliens
-
-//Row 1
-var a1x = 50;
-var a1y = 150;
-var a2x = 110;
-var a2y = 150;
-var a3x = 170;
-var a3y = 150;
-var a4x = 230;
-var a4y = 150;
-var a5x = 290;
-var a5y = 150;
-var a6x = 350;
-var a6y = 150;
-var a7x = 410;
-var a7y = 150;
-var a8x = 470;
-var a8y = 150;
-var a9x = 530;
-var a9y = 150;
-var a10x = 590;
-var a10y = 150;
-
 
 //Raketten
 var r1x = p1X;
@@ -67,6 +44,7 @@ var m3Size = 70;
 
 
 //counters
+var time = 0;
 var lives = 3;
 var score = 0;
 
@@ -218,10 +196,13 @@ function game(){
   keyTyped();
   
   background(0); 
-
+  
+// aliens
   for(var i = 0; i <aliens.length; i++){
     aliens[i].show();
+    aliens[i].move();
   }
+  
   //omranding maken
   stroke(0,255,0); //groen
   noFill();
@@ -235,14 +216,9 @@ function game(){
   fill(0,0,225)
   image(playerImage,p1X,p1Y,p1Width,p1Height,);
 
-  //draw Alien
-  Aliens();
-  
   //run rockets
  
   drawUI();
-
-  botsingen();
 
   //run meteors
   Meteors();
@@ -253,70 +229,6 @@ function game(){
   }
 }//close game
 
-function Aliens(){
-  //draw aliens
-  //row 1
-  image(alienImage,a1x,a1y,a1w,a1h);
-  image(alienImage,a2x,a2y,a1w,a1h);
-  image(alienImage,a3x,a3y,a1w,a1h);
-  image(alienImage,a4x,a4y,a1w,a1h);
-  image(alienImage,a5x,a5y,a1w,a1h);
-  image(alienImage,a6x,a6y,a1w,a1h); 
-  image(alienImage,a7x,a7y,a1w,a1h); 
-  image(alienImage,a8x,a8y,a1w,a1h);
-  image(alienImage,a9x,a9y,a1w,a1h);
-  image(alienImage,a10x,a10y,a1w,a1h);
-
-//beweging van aliens
-  a1x = a1x + (aSpeed*aDirection);
-  a1y = a1y + aDistance;
-  a2x = a2x + (aSpeed*aDirection);
-  a2y = a2y + aDistance;
-  a3x = a3x + (aSpeed*aDirection);
-  a3y = a3y + aDistance;
-  a4x = a4x + (aSpeed*aDirection);
-  a4y = a4y + aDistance;
-  a5x = a5x + (aSpeed*aDirection);
-  a5y = a5y + aDistance;
-  a6x = a6x + (aSpeed*aDirection);
-  a6y = a6y + aDistance;
-  a7x = a7x + (aSpeed*aDirection);
-  a7y = a7y + aDistance;
-  a8x = a8x + (aSpeed*aDirection);
-  a8y = a8y + aDistance;
-  a9x = a9x + (aSpeed*aDirection);
-  a9y = a9y + aDistance;
-  a10x = a10x + (aSpeed*aDirection);
-  a10y = a10y + aDistance;
-
-  
-//rechter kant naar beneden bewegen
-if(a10x >= width-20){
-  aDirection = aDirection*-1;
-  row = row + 1;
-}
-//linkerkant
-if(a1x <= 20){
-  aDirection = aDirection*-1;
-  row = row + 1
- }
-
-//vertical
-  if(row > currentRow){
-    aDistance = rowDistance; // een rij omlaag
-    currentRow = row; //reset
-  }
-  else{
-    aDistance = 0;
-  }  
- if (row >= 20){
-   aDirection = aDirection * 2;
- }
-//game over when at bottom
-  if(row >= 28){
-    gameState = 3;
-  }
-}//close aliens
 
 function Meteors(){
   // Meteor 1
@@ -365,12 +277,21 @@ function drawUI(){
  fill(255,255,255);
  stroke(30,150,30);
  strokeWeight(5);
- textSize(30)
+ textSize(30);
  textAlign(LEFT);
  text("SCORE: " + score ,28 ,45);
  textAlign(RIGHT);
  text("LIVES: " + lives ,620 ,45);
-}
+ stroke(0,64,255);
+ strokeWeight(3);
+ textSize(22);
+ textAlign(CENTER);
+ text("time: " + time + "s", 330, 45);
+
+ if (frameCount % 60 === 0 ){
+   time = time + 1
+ }
+}// close drawUI
 
 function rockets(){
 // rocket position om max raketten in te stellen
@@ -438,101 +359,6 @@ function keyTyped(){
    fire = false;
  }
 }   
-
-function botsingen(){
-  //botsingen raket en alien
-  if(r1x >= a1x - a1w/2 && r1x <= a1x + a1w/2 && r1y >= a1y - a1h/2 && r1y <= a1y + a1h/2 ){
-    
- // gif_loadImg.position(50, 350);
-  explosionSound.play(); 
- 
-  a1y = -10000; // stuur de alien ver buiten het scherm
-  r1position = 2; // raket terug naar speler    
-  score = score + 1; // punten toevoegen
-  }
-
-  if(r1x >= a2x - a1w/2 && r1x <= a2x + a1w/2 && r1y >= a2y - a1h/2 && r1y <= a2y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a2y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a3x - a1w/2 && r1x <= a3x + a1w/2 && r1y >= a3y - a1h/2 && r1y <= a3y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a3y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a4x - a1w/2 && r1x <= a4x + a1w/2 && r1y >= a4y - a1h/2 && r1y <= a4y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a4y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a5x - a1w/2 && r1x <= a5x + a1w/2 && r1y >= a5y - a1h/2 && r1y <= a5y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a5y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a6x - a1w/2 && r1x <= a6x + a1w/2 && r1y >= a6y - a1h/2 && r1y <= a6y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a6y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a7x - a1w/2 && r1x <= a7x + a1w/2 && r1y >= a7y - a1h/2 && r1y <= a7y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a7y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a8x - a1w/2 && r1x <= a8x + a1w/2 && r1y >= a8y - a1h/2 && r1y <= a8y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a8y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-
-  if(r1x >= a9x - a1w/2 && r1x <= a9x + a1w/2 && r1y >= a9y - a1h/2 && r1y <= a9y + a1h/2 ){
-    
-  explosionSound.play(); 
- 
-  a9y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  } 
-
-  if(r1x >= a10x - a1w/2 && r1x <= a10x + a1w/2 && r1y >= a10y - a1h/2 && r1y <= a10y + a1h/2 ){
-    
-
-//    gif.position(a10x, a10y);
-//    noloop();
-  a10y = -10000;
-  r1position = 2;   
-  score = score + 1;
-  }
-}
 
 function preload () {
 //images

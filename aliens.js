@@ -23,4 +23,19 @@ class Alien{
       }      
     }
   }
+
+  move(){
+    this.x = this.x + this.xdir;
+   if(this.x + this.w/2 >= 640 | this.x - this.w/2 <= 0){
+     this.xdir = this.xdir * -1
+     this.y = this.y + this.h
+   }
+
+    if (this.currentImg === 'A' && frameCount % 10 == 0 ){
+      this.currentImg = 'B';
+    }
+   else if (this.currentImg === 'B' && frameCount % 10 == 0 ){
+      this.currentImg ='A'
+    }
+  }
 }// close class
