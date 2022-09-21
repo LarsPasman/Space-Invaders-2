@@ -1,5 +1,3 @@
-var rocketY = this.y
-
 class Rocket{
   constructor(x,y){
     this.x = x;
@@ -13,7 +11,13 @@ class Rocket{
     noStroke();
     fill(255,0,255);
     ellipse(this.x,this.y,this.diam,this.diam);
+
     
+    if(this.y <= 0){
+      let idx = rockets.indexOf(this);
+      console.log(idx)
+      rockets.splice(idx,1);
+    }    
   }
 
   move(){

@@ -158,11 +158,7 @@ function lose(){
   }
 }//close lose
 
-function game(){
-
-  keyPressed();
-
-  
+function game(){  
   background(0); 
   
 // aliens
@@ -182,23 +178,22 @@ function game(){
   rect(width/2, height/2, width, height);
   noStroke();
 
-  //draw player
+  //draw ship
   ship.show();
   ship.move();
-  //run rockets
- 
-  drawUI();
 
+  
+  drawUI();  
 
-  //beweeg en laat rockets zien
-  for (var r1 = 0; r1 < rockets.length; r1++){
-    rockets[r1].show();
-    rockets[r1].move();
+  rockets.forEach(r1 => {
+    //beweeg en laat rockets zien 
+    r1.show();
+    r1.move();
   
     //botsingen
     for (var j = 0; j < aliens.length; j++){
-      if(rockets[r1].hits(aliens[j])){
-        rockets[r1].remove();
+      if(r1.hits(aliens[j])){
+        r1.remove();
         score = score + aliens[j].pts;
         explosionSound.play();
         aliens.splice(j,1); //verwijder alien van lijst
@@ -206,35 +201,31 @@ function game(){
       }
     }// einde alien loop
     for (var i = 0; i < meteors.length; i++){
-      if(rockets[r1].hits(meteors[i])){
-        rockets[r1].remove();
+      if(r1.hits(meteors[i])){
+        r1.remove();
         meteors.splice(i,1);
       }
     }//einde meteor loop
-
+  });
+  
   //loop door rockets en verwijder
   for (var z = rockets.length -1; z>= 0; z--){
-    if(rockets[z].toDelete === true){
+    if(rockets[z].toDelete){
       rockets.splice(z,1); // verwijder rocket van lijst
       rposition = 2;
     }
-  }// einde rocket loop #2
   }
-    //check of game over
+  // einde rocket loop #2  
+  //check of game over
   if (aliens.length <= 0){
     gameState = 2;
     winSound.play();   
-  }
-  if(rocketY <= 0){
-    rockets.splice(r1,1)
-    rposition = 2;
-  } 
+  }  
   
   if (rposition == 2){
     rposition = 0;
   }
   
-
 }//close game
 
 //De speler UI tekenen (score en levens)
@@ -259,22 +250,6 @@ function drawUI(){
 }// close drawUI
 
 //player input
-function keyPressed(){
- if(key === ' ' && keyIsPressed && gameState == 1 && rposition == 0){
-   var rocket = new Rocket (ship.x, ship.y);
-   rockets.push(rocket);
-   rposition = 1;
- }
- if (keyCode === RIGHT_ARROW && keyIsPressed){
-  ship.setDir(1);
- }  
-  else if (keyCode === LEFT_ARROW && keyIsPressed){
-  ship.setDir(-1);
-  }
-  else{
-    ship.setDir(0)
-  }
-}
 
 function preload () {
 //images
