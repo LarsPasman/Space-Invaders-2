@@ -8,13 +8,11 @@ class Ship{
   }
 
   show(){
-    fill(0,255,0)
     image(playerImage, this.x, this.y, this.width, this.height)
   }
   move(){
     this.x += this.xdir * 10
   }
-
   setDir(dir){
     this.xdir = dir;
   }

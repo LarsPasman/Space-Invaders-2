@@ -194,6 +194,7 @@ function game(){
   for (var r1 = 0; r1 < rockets.length; r1++){
     rockets[r1].show();
     rockets[r1].move();
+  
     //botsingen
     for (var j = 0; j < aliens.length; j++){
       if(rockets[r1].hits(aliens[j])){
@@ -203,14 +204,13 @@ function game(){
         aliens.splice(j,1); //verwijder alien van lijst
         rposition = 0;
       }
-    }   // einde alien loop
+    }// einde alien loop
     for (var i = 0; i < meteors.length; i++){
       if(rockets[r1].hits(meteors[i])){
         rockets[r1].remove();
         meteors.splice(i,1);
       }
     }//einde meteor loop
-  }// einde rocket loop #1
 
   //loop door rockets en verwijder
   for (var z = rockets.length -1; z>= 0; z--){
@@ -219,17 +219,23 @@ function game(){
       rposition = 2;
     }
   }// einde rocket loop #2
-  //check of game over
+  }
+    //check of game over
   if (aliens.length <= 0){
     gameState = 2;
     winSound.play();   
   }
-
-  if (rposition == 2)
+  if(rocketY <= 0){
+    rockets.splice(r1,1)
+    rposition = 2;
+  } 
+  
+  if (rposition == 2){
     rposition = 0;
+  }
+  
 
 }//close game
-
 
 //De speler UI tekenen (score en levens)
 function drawUI(){

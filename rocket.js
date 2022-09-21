@@ -1,3 +1,5 @@
+var rocketY = this.y
+
 class Rocket{
   constructor(x,y){
     this.x = x;
@@ -18,7 +20,7 @@ class Rocket{
    this.y = this.y - 16;
   }
 
-  hits(alien){
+ hits(alien){
     //dist() functie meet afstand tussen 2 punten
     var d = dist(this.x, this.y, alien.x, alien.y);
     if (d < this.r + alien.radius){  // als ze elkaar raken
