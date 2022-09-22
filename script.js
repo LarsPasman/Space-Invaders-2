@@ -214,18 +214,12 @@ function game(){
       rockets.splice(z,1); // verwijder rocket van lijst
       rposition = 2;
     }
-  }
-  // einde rocket loop #2  
+  }// einde rocket loop #2  
   //check of game over
   if (aliens.length <= 0){
     gameState = 2;
     winSound.play();   
   }  
-  
-  if (rposition == 2){
-    rposition = 0;
-  }
-  
 }//close game
 
 //De speler UI tekenen (score en levens)
