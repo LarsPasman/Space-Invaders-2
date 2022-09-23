@@ -37,5 +37,11 @@ class Alien{
    else if (this.currentImg === 'B' && frameCount % 10 == 0 ){
       this.currentImg ='A'
     }
-  }
+    
+    if (this.length <= 0){
+    gameState = 2;
+    winSound.play();   
+  } 
+ }
+  
 }// close class

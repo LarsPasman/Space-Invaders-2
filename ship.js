@@ -25,8 +25,15 @@ class Ship {
       ship.x -= 10;
     }
 
-    //this.x += this.xdir * 10
+    //borders maken randen
+   if(this.x <= 0){
+     this.x = 640;
+   }
+    if(this.x > 640){
+     this.x = 0;
+   }
   }
+  
   setDir(dir) {
     this.xdir = dir;
   }

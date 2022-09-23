@@ -105,7 +105,7 @@ function welkom(){
   textFont(bubbleFont);
   text('DRUK OP ENTER OM TE BEGINNEN',width/2, 450);
 
-  image(alienImage,190,540,100,75)
+
   image(playerImage,450,540,75,100)
 
     if (keyCode == 13){
@@ -171,6 +171,7 @@ function game(){
     for(var i = 0; i <meteors.length; i++){
     meteors[i].show();
   }
+  
   //omranding maken
   stroke(0,255,0); //groen
   noFill();
@@ -189,23 +190,8 @@ function game(){
     //beweeg en laat rockets zien 
     r1.show();
     r1.move();
-  
-    //botsingen
-    for (var j = 0; j < aliens.length; j++){
-      if(r1.hits(aliens[j])){
-        r1.remove();
-        score = score + aliens[j].pts;
-        explosionSound.play();
-        aliens.splice(j,1); //verwijder alien van lijst
-        rposition = 0;
-      }
-    }// einde alien loop
-    for (var i = 0; i < meteors.length; i++){
-      if(r1.hits(meteors[i])){
-        r1.remove();
-        meteors.splice(i,1);
-      }
-    }//einde meteor loop
+    r1.hit();
+    
   });
   
   //loop door rockets en verwijder
@@ -215,11 +201,6 @@ function game(){
       rposition = 2;
     }
   }// einde rocket loop #2  
-  //check of game over
-  if (aliens.length <= 0){
-    gameState = 2;
-    winSound.play();   
-  }  
 }//close game
 
 //De speler UI tekenen (score en levens)
@@ -249,7 +230,7 @@ function preload () {
 //images
  bg = loadImage('img/sterren.png');
  playerImage = loadImage('img/player.png');
- alienImage = loadImage('img/alien.png');
+
  meteor = loadImage('img/rock.png');
 
 //aliens

@@ -22,8 +22,28 @@ class Rocket{
 
   move(){
    this.y = this.y - 16;
+
   }
 
+  hit(){
+     for (var j = 0; j < aliens.length; j++){
+      if(this.hits(aliens[j])){
+        this.remove();
+        score = score + aliens[j].pts;
+        explosionSound.play();
+        aliens.splice(j,1); //verwijder alien van lijst
+      }
+    }// einde alien loop
+    
+    for (var i = 0; i < meteors.length; i++){
+      if(this.hits(meteors[i])){
+        this.remove();
+        meteors.splice(i,1);
+        rposition = 0
+      }
+    }//einde meteor loop
+  }//einde hit
+  
  hits(alien){
     //dist() functie meet afstand tussen 2 punten
     var d = dist(this.x, this.y, alien.x, alien.y);
