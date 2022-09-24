@@ -18,11 +18,11 @@ class Ship {
     }
 
     if (keyIsDown(RIGHT_ARROW)) {
-      ship.x += 10;
+      this.x += 10;
     }
 
     if (keyIsDown(LEFT_ARROW)) {
-      ship.x -= 10;
+      this.x -= 10;
     }
 
     //borders maken randen

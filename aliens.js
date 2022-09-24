@@ -1,4 +1,6 @@
-class Alien{
+
+ class Alien{
+  
   constructor(x, y, imgA, imgB, pointValue){
     this.x = x;
     this.y = y;
@@ -10,7 +12,8 @@ class Alien{
     this.currentImg = 'A';
     this.pts = pointValue;
     this.radius = 20; // voor botsingen
-    this.xdir = 1;    
+    this.xdir = 1;     
+    this.r = floor(random(0 , 1000))
   }
 
   show(){
@@ -21,6 +24,16 @@ class Alien{
       if (this.currentImg === 'B') {
         image(this.imgB,this.x,this.y,this.w,this.h)
       }      
+    }
+
+    if(frameCount % this.r == 0){
+      this.shoot();
+      this.r = floor(random(0,1000))
+    }
+    
+    if (this.length <= 0){
+     gameState = 2;
+     winSound.play();   
     }
   }
 
@@ -37,11 +50,9 @@ class Alien{
    else if (this.currentImg === 'B' && frameCount % 10 == 0 ){
       this.currentImg ='A'
     }
-    
-    if (this.length <= 0){
-    gameState = 2;
-    winSound.play();   
-  } 
- }
-  
+  }
+
+  shoot(){
+    lasers.push(new Laser(this.x, this.y))
+  }
 }// close class

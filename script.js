@@ -1,4 +1,4 @@
-
+let lasers = [];
 let aliens = []; // lijstje aliens
 let ship;
 let rockets = []; // lijstje raketten
@@ -171,13 +171,6 @@ function game(){
     for(var i = 0; i <meteors.length; i++){
     meteors[i].show();
   }
-  
-  //omranding maken
-  stroke(0,255,0); //groen
-  noFill();
-  strokeWeight(3);
-  rect(width/2, height/2, width, height);
-  noStroke();
 
   //draw ship
   ship.show();
@@ -186,6 +179,13 @@ function game(){
   
   drawUI();  
 
+  lasers.forEach(l => {
+    l.show();
+    l.move();
+    l.hit();
+  })
+
+  
   rockets.forEach(r1 => {
     //beweeg en laat rockets zien 
     r1.show();
@@ -205,6 +205,13 @@ function game(){
 
 //De speler UI tekenen (score en levens)
 function drawUI(){
+  //omranding maken
+  stroke(0,255,0); //groen
+  noFill();
+  strokeWeight(3);
+  rect(width/2, height/2, width, height);
+  noStroke();
+  
  fill(255,255,255);
  stroke(30,150,30);
  strokeWeight(5);

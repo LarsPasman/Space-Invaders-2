@@ -3,6 +3,7 @@ class Meteor{
    this.x = x;
    this.y = y;
    this.width = 50;
+   this.height = 50;    
    this.alive = true;
    this.img = img
    this.radius = 20; // voor botsingen
@@ -10,7 +11,7 @@ class Meteor{
 
   show(){
   if (this.alive){
-    image(this.img, this.x,this.y,this.width,this.width)
+    image(this.img,this.x,this.y,this.width,this.height)
   }
  }
 }

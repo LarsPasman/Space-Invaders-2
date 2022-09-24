@@ -15,7 +15,6 @@ class Rocket{
     
     if(this.y <= 0){
       let idx = rockets.indexOf(this);
-      console.log(idx)
       rockets.splice(idx,1);
     }    
   }
@@ -38,7 +37,7 @@ class Rocket{
     for (var i = 0; i < meteors.length; i++){
       if(this.hits(meteors[i])){
         this.remove();
-        meteors.splice(i,1);
+        meteors.splice(i,1)
         rposition = 0
       }
     }//einde meteor loop
