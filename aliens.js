@@ -1,6 +1,4 @@
-
  class Alien{
-  
   constructor(x, y, imgA, imgB, pointValue){
     this.x = x;
     this.y = y;

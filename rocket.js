@@ -41,6 +41,14 @@ class Rocket{
         rposition = 0
       }
     }//einde meteor loop
+  
+  //loop door rockets en verwijder
+   for (var z = rockets.length -1; z>= 0; z--){
+     if(rockets[z].toDelete){
+       rockets.splice(z,1); // verwijder rocket van lijst
+       rposition = 2;
+     }
+   }// einde rocket loop #2      
   }//einde hit
   
  hits(alien){

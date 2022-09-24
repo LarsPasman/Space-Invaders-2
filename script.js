@@ -8,7 +8,7 @@ var rposition = 0; //bijhouden waar de raket is
 
 //counters
 var time = 0;
-var lives = 3;
+var lives = 100;
 var score = 0;
 
 //gameState
@@ -17,8 +17,35 @@ var gameState = 0;
 //gamestate 1 = de echte game
 //gamestate 2 = win scherm
 //gamestate 3 = lose scherm
+
 var width = 640;
 var height = 640;
+
+
+function preload () {
+//images
+ bg = loadImage('img/sterren.png');
+ playerImage = loadImage('img/player.png');
+
+ meteor = loadImage('img/rock.png');
+
+//aliens
+ alien1a = loadImage('img/alien1a.png')
+ alien1b = loadImage('img/alien1b.png')
+ alien2a = loadImage('img/alien2a.png')
+ alien2b = loadImage('img/alien2b.png')
+// explosionGif = loadImage("explosion.gif");
+// gif = createImg("explosion.gif");
+//fonts
+ bubbleFont = loadFont('fonts/bubbleFont.ttf');
+ pixelFont = loadFont('fonts/pixelFont.ttf');
+//sounds
+ fireSound = loadSound('music/pew.m4a');
+ explosionSound = loadSound('music/explosion.m4a');
+ backgroundMusic = loadSound('music/8bit_song.mp3');
+ startSound = loadSound('music/8bit_charge.m4a');
+ winSound = loadSound('music/8bit_win.m4a');
+}
 
 function setup() {
   var cnv = createCanvas(640,640);
@@ -64,9 +91,8 @@ function draw(){
   }
   
   if (gameState == 2){
-    win();
+   win();
   }
-  
   //lose
   if (gameState == 3){
     lose();
@@ -180,27 +206,17 @@ function game(){
   drawUI();  
 
   lasers.forEach(l => {
+    l.hit();
     l.show();
     l.move();
-    l.hit();
   })
-
   
   rockets.forEach(r1 => {
     //beweeg en laat rockets zien 
     r1.show();
     r1.move();
     r1.hit();
-    
   });
-  
-  //loop door rockets en verwijder
-  for (var z = rockets.length -1; z>= 0; z--){
-    if(rockets[z].toDelete){
-      rockets.splice(z,1); // verwijder rocket van lijst
-      rposition = 2;
-    }
-  }// einde rocket loop #2  
 }//close game
 
 //De speler UI tekenen (score en levens)
@@ -230,30 +246,3 @@ function drawUI(){
    time = time + 1
  }
 }// close drawUI
-
-//player input
-
-function preload () {
-//images
- bg = loadImage('img/sterren.png');
- playerImage = loadImage('img/player.png');
-
- meteor = loadImage('img/rock.png');
-
-//aliens
- alien1a = loadImage('img/alien1a.png')
- alien1b = loadImage('img/alien1b.png')
- alien2a = loadImage('img/alien2a.png')
- alien2b = loadImage('img/alien2b.png')
-// explosionGif = loadImage("explosion.gif");
-// gif = createImg("explosion.gif");
-//fonts
- bubbleFont = loadFont('fonts/bubbleFont.ttf');
- pixelFont = loadFont('fonts/pixelFont.ttf');
-//sounds
- fireSound = loadSound('music/pew.m4a');
- explosionSound = loadSound('music/explosion.m4a');
- backgroundMusic = loadSound('music/8bit_song.mp3');
- startSound = loadSound('music/8bit_charge.m4a');
- winSound = loadSound('music/8bit_win.m4a');
-}

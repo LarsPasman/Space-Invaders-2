@@ -31,11 +31,5 @@ class Laser {
     if(lives == 0){
       gameState = 3
     }
-    
-    if (this.x >= meteor.x - meteor.width/2 && this.x <= meteor.x + meteor.width/2 &&
-      this.y >= meteor.y - meteor.height/2 && this.y <= meteor.y + meteor.height) {
-      let idx = lasers.indexOf(this);      
-      lasers.splice(1,idx);
-    }
   }
 }
