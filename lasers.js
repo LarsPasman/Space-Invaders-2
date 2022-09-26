@@ -19,15 +19,18 @@ class Laser {
   }
 
   hit() {
+
     if (this.x >= ship.x - ship.width/2 && this.x <= ship.x + ship.width/2 &&
       this.y >= ship.y - ship.height/2 && this.y <= ship.y + ship.height) {
       let idx = lasers.indexOf(this);      
       lasers.splice(1,idx);
       lives = lives - 1;
+      
     }
     else{
       lives = lives;
     }
+    
     if(lives == 0){
       gameState = 3
     }

@@ -16,11 +16,12 @@ class Rocket{
     if(this.y <= 0){
       let idx = rockets.indexOf(this);
       rockets.splice(idx,1);
+      rocketCount = rocketCount - 1;
     }    
   }
 
   move(){
-   this.y = this.y - 16;
+   this.y = this.y -15;
 
   }
 
@@ -31,14 +32,15 @@ class Rocket{
         score = score + aliens[j].pts;
         explosionSound.play();
         aliens.splice(j,1); //verwijder alien van lijst
+       rocketCount -= 1;
       }
     }// einde alien loop
     
     for (var i = 0; i < meteors.length; i++){
       if(this.hits(meteors[i])){
         this.remove();
-        meteors.splice(i,1)
-        rposition = 0
+        meteors.splice(i,1);
+       rocketCount -= 1;
       }
     }//einde meteor loop
   
@@ -46,7 +48,6 @@ class Rocket{
    for (var z = rockets.length -1; z>= 0; z--){
      if(rockets[z].toDelete){
        rockets.splice(z,1); // verwijder rocket van lijst
-       rposition = 2;
      }
    }// einde rocket loop #2      
   }//einde hit

@@ -12,9 +12,10 @@ class Ship {
   }
 
   move() {
-    if (keyIsDown(32)) {
+    if (keyIsDown(32) && rocketCount < 2 && frameCount % 10 == 0) {
       var rocket = new Rocket(this.x, this.y);
       rockets.push(rocket);
+      rocketCount += 1;
     }
 
     if (keyIsDown(RIGHT_ARROW)) {

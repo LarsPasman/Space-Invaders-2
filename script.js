@@ -4,10 +4,10 @@ let ship;
 let rockets = []; // lijstje raketten
 let meteors = [];//lijstje meteoren
 
-var rposition = 0; //bijhouden waar de raket is
+var rocketCount = 0; //bijhouden hoeveel raketten er zijn afgevuurd
 
 //counters
-var time = 0;
+var timer = 0;
 var lives = 100;
 var score = 0;
 
@@ -45,7 +45,7 @@ function preload () {
  backgroundMusic = loadSound('music/8bit_song.mp3');
  startSound = loadSound('music/8bit_charge.m4a');
  winSound = loadSound('music/8bit_win.m4a');
-}
+}//close preload
 
 function setup() {
   var cnv = createCanvas(640,640);
@@ -192,7 +192,11 @@ function game(){
     aliens[i].show();
     aliens[i].move();
   }
-
+    
+  if (aliens.length <= 0){
+    gameState = 2;
+    winSound.play();   
+  }
 //meteors
     for(var i = 0; i <meteors.length; i++){
     meteors[i].show();
@@ -217,6 +221,7 @@ function game(){
     r1.move();
     r1.hit();
   });
+  console.log(rocketCount)
 }//close game
 
 //De speler UI tekenen (score en levens)
@@ -240,9 +245,9 @@ function drawUI(){
  strokeWeight(3);
  textSize(22);
  textAlign(CENTER);
- text("time: " + time + "s", 330, 45);
+ text("time: " + timer + "s", 330, 45);
 
  if (frameCount % 60 === 0 ){
-   time = time + 1
+   timer = timer + 1
  }
 }// close drawUI

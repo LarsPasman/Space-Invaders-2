@@ -29,9 +29,9 @@
       this.r = floor(random(0,1000))
     }
     
-    if (this.length <= 0){
-     gameState = 2;
-     winSound.play();   
+    if (this.y >= ship.y - ship.height){
+     gameState = 3;
+      
     }
   }
 
