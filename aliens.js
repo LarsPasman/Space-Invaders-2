@@ -1,4 +1,4 @@
- class Alien{
+class Alien{
   constructor(x, y, imgA, imgB, pointValue){
     this.x = x;
     this.y = y;
@@ -10,12 +10,13 @@
     this.currentImg = 'A';
     this.pts = pointValue;
     this.radius = 20; // voor botsingen
-    this.xdir = 1;     
+    this.xdir = 2  //speed 
     this.r = floor(random(0 , 1000))
   }
-
+ 
   show(){
-    if (this.alive == true){ // teken alleen als hij leeft
+     //images
+    if (this.alive){ // teken alleen als hij leeft
       if (this.currentImg === 'A') {
         image(this.imgA,this.x,this.y,this.w,this.h)
       }
@@ -24,24 +25,31 @@
       }      
     }
 
+    //random schieten
     if(frameCount % this.r == 0){
       this.shoot();
-      this.r = floor(random(0,1000))
+      laserSound.play();
+      this.r = floor(random(0,700))
     }
-    
+
+    //als de aliens bij schip komen
     if (this.y >= ship.y - ship.height){
      gameState = 3;
-      
+    loseSound.play();
     }
   }
 
   move(){
     this.x = this.x + this.xdir;
-   if(this.x + this.w/2 >= 640 | this.x - this.w/2 <= 0){
+
+    //als hij de border hit verander richting en omlaag
+   if(this.x + this.w/2 >= windowWidth/2 + 320 | this.x - this.w/2 <= windowWidth/2 -
+  320 ){
      this.xdir = this.xdir * -1
-     this.y = this.y + this.h * 2
+     this.y = this.y + this.h + 50
    }
 
+    //image animatie
     if (this.currentImg === 'A' && frameCount % 10 == 0 ){
       this.currentImg = 'B';
     }

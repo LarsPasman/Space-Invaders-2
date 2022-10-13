@@ -535,6 +535,7 @@ function Reset(){
   timer2 = 20;
   score = 0;
   lives = 3;
+  bossLives = 20;
   rocketCount = 1;
   randomCount = 500
   setup();
