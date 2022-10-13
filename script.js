@@ -164,7 +164,6 @@ function game(){
   // als aliens dood zijn ga naar volgende level
   if (aliens.length <= 0){
     gameState = 4;
-    rocketCount = 1000;
     // winSound.play();   
   }
 
@@ -176,6 +175,7 @@ function game(){
   //draw ship
   ship.show();
   ship.move();
+  ship.shoot();
   
 if(timer >= 10){
   ufo.move();
@@ -449,12 +449,11 @@ function bossStart(){
 function bossFight(){
   background(0)
   drawBossUI(); 
-  rocketCount = 1000;
   quandaleDingle.stop();
-  timer
   
   ship.show();
   ship.move();
+  ship.shootBoss();
 
   boss.show();
   boss.move();
