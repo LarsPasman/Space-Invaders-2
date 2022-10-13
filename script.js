@@ -159,6 +159,9 @@ function win(){
   noStroke();
 
 }//close win
+  
+
+
 
 function lose(){
  background(255,0,0); 
